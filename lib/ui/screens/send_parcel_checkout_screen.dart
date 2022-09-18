@@ -55,7 +55,8 @@ class _SendParcelCheckoutScreenState extends State<SendParcelCheckoutScreen> {
     setState(() {
       _isLoading = true;
     });
-    var _url = Uri.parse(constants[0].url + 'package/207861662754448/rejected');
+    var _url = Uri.parse(
+        constants[0].url + 'package/' + packageData[6] / dropdownvalue);
     final response = await http.put(_url,
         body: {
           'amount_to_pay': userNameController.text,
@@ -75,7 +76,6 @@ class _SendParcelCheckoutScreenState extends State<SendParcelCheckoutScreen> {
       setState(() {
         _isLoading = false;
       });
-      print(responseData);
       Get.snackbar('Error  ', 'Error Occured');
     }
 

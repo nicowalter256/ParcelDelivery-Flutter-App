@@ -23,6 +23,7 @@ class _AgentLoginPageState extends State<AgentLoginPage> {
   double _headerHeight = 250;
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
+  bool _passwordVisible = false;
 
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -135,9 +136,53 @@ class _AgentLoginPageState extends State<AgentLoginPage> {
                                     }
                                     return null;
                                   },
-                                  obscureText: true,
-                                  decoration: ThemeHelper().textInputDecoration(
-                                      'Password', 'Enter your password'),
+                                  obscureText: !_passwordVisible,
+                                  decoration: InputDecoration(
+                                    labelText: "Password",
+                                    hintText: "Enter your password",
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    contentPadding:
+                                        EdgeInsets.fromLTRB(20, 10, 20, 10),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(100.0),
+                                        borderSide: const BorderSide(
+                                            color: Colors.grey)),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(100.0),
+                                        borderSide: BorderSide(
+                                            color: Colors.grey.shade400)),
+                                    errorBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(100.0),
+                                        // ignore: prefer_const_constructors
+                                        borderSide: BorderSide(
+                                            color: Colors.red, width: 2.0)),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(100.0),
+                                        // ignore: prefer_const_constructors
+                                        borderSide: BorderSide(
+                                            color: Colors.red, width: 2.0)),
+                                    suffixIcon: IconButton(
+                                      icon: Icon(
+                                        // Based on passwordVisible state choose the icon
+                                        _passwordVisible
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color:
+                                            Theme.of(context).primaryColorDark,
+                                      ),
+                                      onPressed: () {
+                                        // Update the state i.e. toogle the state of passwordVisible variable
+                                        setState(() {
+                                          _passwordVisible = !_passwordVisible;
+                                        });
+                                      },
+                                    ),
+                                  ),
                                 ),
                                 decoration:
                                     ThemeHelper().inputBoxDecorationShaddow(),

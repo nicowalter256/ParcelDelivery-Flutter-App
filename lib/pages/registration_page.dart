@@ -6,7 +6,6 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:cargo_app/constants/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
-import 'dart:convert';
 import 'login_page.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -27,6 +26,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController contactController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmpassController = TextEditingController();
 
   Future register() async {
     var _url = Uri.parse(constants[0].url + 'sender');
@@ -204,6 +204,28 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             validator: (val) {
                               if (val!.isEmpty) {
                                 return "Please enter your password";
+                              }
+                              return null;
+                            },
+                          ),
+                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
+                        ),
+                        const SizedBox(height: 20.0),
+                        Container(
+                          child: TextFormField(
+                            controller: confirmpassController,
+                            onSaved: (value) {
+                              confirmpassController.text = value!;
+                            },
+                            obscureText: true,
+                            decoration: ThemeHelper().textInputDecoration(
+                                "Confirm*", "Confirm password"),
+                            validator: (val) {
+                              if (val!.isEmpty) {
+                                return "Please confirm your password";
+                              } else if (confirmpassController.text !=
+                                  passwordController.text) {
+                                return "Please match your password";
                               }
                               return null;
                             },

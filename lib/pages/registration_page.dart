@@ -20,6 +20,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   bool checkedValue = false;
   bool checkboxValue = false;
   bool _isLoading = false;
+  bool _passwordVisible2 = false;
+  bool _passwordVisible = false;
 
   final TextEditingController firstnameController = TextEditingController();
   final TextEditingController lastnameController = TextEditingController();
@@ -51,7 +53,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       setState(() {
         _isLoading = false;
       });
-      Get.snackbar('Error  ', 'Invalid Credentials');
+      Get.snackbar('Error  ', 'Error Occurred');
     }
 
     return responseData;
@@ -88,6 +90,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   border:
                                       Border.all(width: 5, color: Colors.white),
                                   color: Colors.white,
+                                  // ignore: prefer_const_literals_to_create_immutables
                                   boxShadow: [
                                     const BoxShadow(
                                       color: Colors.black12,
@@ -198,9 +201,48 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             onSaved: (value) {
                               passwordController.text = value!;
                             },
-                            obscureText: true,
-                            decoration: ThemeHelper().textInputDecoration(
-                                "Password*", "Enter your password"),
+                            obscureText: !_passwordVisible,
+                            decoration: InputDecoration(
+                              labelText: "Password",
+                              hintText: "Enter your password",
+                              fillColor: Colors.white,
+                              filled: true,
+                              contentPadding:
+                                  const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(100.0),
+                                  borderSide:
+                                      const BorderSide(color: Colors.grey)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(100.0),
+                                  borderSide:
+                                      BorderSide(color: Colors.grey.shade400)),
+                              errorBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(100.0),
+                                  // ignore: prefer_const_constructors
+                                  borderSide: BorderSide(
+                                      color: Colors.red, width: 2.0)),
+                              focusedErrorBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(100.0),
+                                  // ignore: prefer_const_constructors
+                                  borderSide: BorderSide(
+                                      color: Colors.red, width: 2.0)),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  // Based on passwordVisible state choose the icon
+                                  _passwordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Theme.of(context).primaryColorDark,
+                                ),
+                                onPressed: () {
+                                  // Update the state i.e. toogle the state of passwordVisible variable
+                                  setState(() {
+                                    _passwordVisible = !_passwordVisible;
+                                  });
+                                },
+                              ),
+                            ),
                             validator: (val) {
                               if (val!.isEmpty) {
                                 return "Please enter your password";
@@ -217,9 +259,48 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             onSaved: (value) {
                               confirmpassController.text = value!;
                             },
-                            obscureText: true,
-                            decoration: ThemeHelper().textInputDecoration(
-                                "Confirm*", "Confirm password"),
+                            obscureText: !_passwordVisible2,
+                            decoration: InputDecoration(
+                              labelText: "Confirm*",
+                              hintText: "Confirm password",
+                              fillColor: Colors.white,
+                              filled: true,
+                              contentPadding:
+                                  const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(100.0),
+                                  borderSide:
+                                      const BorderSide(color: Colors.grey)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(100.0),
+                                  borderSide:
+                                      BorderSide(color: Colors.grey.shade400)),
+                              errorBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(100.0),
+                                  // ignore: prefer_const_constructors
+                                  borderSide: BorderSide(
+                                      color: Colors.red, width: 2.0)),
+                              focusedErrorBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(100.0),
+                                  // ignore: prefer_const_constructors
+                                  borderSide: BorderSide(
+                                      color: Colors.red, width: 2.0)),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  // Based on passwordVisible state choose the icon
+                                  _passwordVisible2
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Theme.of(context).primaryColorDark,
+                                ),
+                                onPressed: () {
+                                  // Update the state i.e. toogle the state of passwordVisible variable
+                                  setState(() {
+                                    _passwordVisible2 = !_passwordVisible2;
+                                  });
+                                },
+                              ),
+                            ),
                             validator: (val) {
                               if (val!.isEmpty) {
                                 return "Please confirm your password";

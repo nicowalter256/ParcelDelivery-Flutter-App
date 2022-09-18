@@ -84,8 +84,7 @@ class _AgentHomeScreenState extends State<AgentHomeScreen> {
                   padding: const EdgeInsets.only(right: 24),
                   child: CircleAvatar(
                     child: ClipOval(
-                      child: Image.network(
-                          'https://miro.medium.com/fit/c/1360/1360/2*NDZrabY3uLA-1MM3K1MexQ.png'),
+                      child: Image.network(''),
                     ),
                   ),
                 ),

@@ -59,7 +59,7 @@ class _SendParcelCheckoutScreenState extends State<SendParcelCheckoutScreen> {
         constants[0].url + 'package/' + packageData[6] / dropdownvalue);
     final response = await http.put(_url,
         body: {
-          'amount_to_pay': userNameController.text,
+          'amount_to_pay': int.parse(userNameController.text),
         },
         headers: headers);
     final String responseData = response.body;
@@ -290,7 +290,7 @@ class _SendParcelCheckoutScreenState extends State<SendParcelCheckoutScreen> {
             ),
             role == "agent"
                 ? _isLoading
-                    ? CircularProgressIndicator()
+                    ? const CircularProgressIndicator()
                     : SizedBox(
                         height: 48,
                         width: double.infinity,
@@ -298,7 +298,6 @@ class _SendParcelCheckoutScreenState extends State<SendParcelCheckoutScreen> {
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               updateParcel();
-                              // userLogin();
                             }
                           },
                           child: Text(

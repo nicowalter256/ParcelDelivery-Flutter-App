@@ -113,12 +113,12 @@ class _LoginPageState extends State<LoginPage> {
                                   },
                                   validator: (text) {
                                     if (text == null || text.isEmpty) {
-                                      return 'Username is required';
+                                      return 'Email is required';
                                     }
                                     return null;
                                   },
                                   decoration: ThemeHelper().textInputDecoration(
-                                      'User Name', 'Enter your user name'),
+                                      'Email', 'Enter your email'),
                                 ),
                                 decoration:
                                     ThemeHelper().inputBoxDecorationShaddow(),

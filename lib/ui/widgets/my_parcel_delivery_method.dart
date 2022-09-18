@@ -79,7 +79,6 @@ class _MyParcelDeliveryMethodState extends State<MyParcelDeliveryMethod> {
       setState(() {
         _isLoading = false;
       });
-      print(response.body);
       Get.snackbar('Error  ', 'Network Error');
     }
 

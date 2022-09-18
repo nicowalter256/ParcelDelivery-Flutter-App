@@ -31,6 +31,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController confirmpassController = TextEditingController();
 
   Future register() async {
+    setState(() {
+      _isLoading = true;
+    });
     var _url = Uri.parse(constants[0].url + 'sender');
     final response = await http.post(_url, body: {
       'firstname': firstnameController.text,
@@ -53,9 +56,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
       setState(() {
         _isLoading = false;
       });
-      Get.snackbar('Error  ', 'Error Occurred');
+      Get.snackbar('Error  ', 'Email Already Exists');
     }
-
     return responseData;
   }
 
@@ -357,30 +359,32 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           },
                         ),
                         const SizedBox(height: 20.0),
-                        Container(
-                          decoration:
-                              ThemeHelper().buttonBoxDecoration(context),
-                          child: ElevatedButton(
-                            style: ThemeHelper().buttonStyle(),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                              child: Text(
-                                "Register".toUpperCase(),
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                        _isLoading
+                            ? const CircularProgressIndicator()
+                            : Container(
+                                decoration:
+                                    ThemeHelper().buttonBoxDecoration(context),
+                                child: ElevatedButton(
+                                  style: ThemeHelper().buttonStyle(),
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        40, 10, 40, 10),
+                                    child: Text(
+                                      "Register".toUpperCase(),
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      register();
+                                    }
+                                  },
                                 ),
                               ),
-                            ),
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                register();
-                              }
-                            },
-                          ),
-                        ),
                         const SizedBox(height: 30.0),
                         const Text(
                           "Or create account using social media",

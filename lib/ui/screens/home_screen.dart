@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cargo_app/ui/widgets/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:cargo_app/ui/screens/screens.dart';
+import 'package:cargo_app/ui/screens/track_parcel_screen.dart';
 import 'package:get/get.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:cargo_app/models/packagesModel.dart';
@@ -113,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Enter parcel number or scan QR code',
+                              'Enter parcel number',
                               style: Theme.of(context).textTheme.headline5,
                             ),
                             Padding(
@@ -148,21 +149,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.all(14),
-                                    width: 50,
-                                    height: 49,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(4),
-                                      color: Theme.of(context).backgroundColor,
-                                    ),
-                                    child: SvgPicture.asset(
-                                      'assets/images/icon_qrcode.svg',
-                                    ),
-                                  )
                                 ],
                               ),
                             ),
@@ -172,12 +158,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: TextButton(
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                super.widget));
-                                    getPackages(trackFieldController.text);
+                                    Get.to(
+                                      const TrackScreen(),
+                                    );
+                                    // Navigator.pushReplacement(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (BuildContext context) =>
+                                    //             super.widget));
+                                    // getPackages(trackFieldController.text);
                                   }
                                 },
                                 child: Text(

@@ -324,7 +324,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                               horizontal: 12, vertical: 4),
                                           leading: Icon(Icons.my_location),
                                           title: Text("Location"),
-                                          subtitle: Text("USA"),
+                                          subtitle: Text("kAMPALA"),
                                         ),
                                         ListTile(
                                           leading: Icon(Icons.email),

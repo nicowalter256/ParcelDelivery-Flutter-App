@@ -113,6 +113,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.3"
+  dotted_line:
+    dependency: transitive
+    description:
+      name: dotted_line
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.0"
   fake_async:
     dependency: transitive
     description:
@@ -581,6 +588,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  vertical_stepper:
+    dependency: "direct main"
+    description:
+      name: vertical_stepper
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   watcher:
     dependency: transitive
     description:

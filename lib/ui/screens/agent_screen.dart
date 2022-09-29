@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:cargo_app/ui/screens/screens.dart';
 import 'package:get/get.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:cargo_app/models/AllPackagesModel.dart';
 import 'package:cargo_app/constants/constants.dart';
 import 'package:cargo_app/pages/profile_page.dart';
 import 'package:http/http.dart' as http;
@@ -115,7 +114,7 @@ class _AgentHomeScreenState extends State<AgentHomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Enter parcel number or scan QR code',
+                              'Enter parcel number',
                               style: Theme.of(context).textTheme.headline5,
                             ),
                             Padding(
@@ -150,21 +149,6 @@ class _AgentHomeScreenState extends State<AgentHomeScreen> {
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.all(14),
-                                    width: 50,
-                                    height: 49,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(4),
-                                      color: Theme.of(context).backgroundColor,
-                                    ),
-                                    child: SvgPicture.asset(
-                                      'assets/images/icon_qrcode.svg',
-                                    ),
-                                  )
                                 ],
                               ),
                             ),

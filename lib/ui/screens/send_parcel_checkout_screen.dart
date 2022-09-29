@@ -99,56 +99,6 @@ class _SendParcelCheckoutScreenState extends State<SendParcelCheckoutScreen> {
               const SizedBox(
                 height: 21,
               ),
-              Container(
-                height: 207,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 19,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.grey.shade200,
-                  image: const DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage('assets/images/img_card_background.png'),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      '•••• •••• •••• 0412',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline2
-                          ?.copyWith(color: Colors.white),
-                    ),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'ANNIE ROBERTSON',
-                          style:
-                              Theme.of(context).textTheme.headline4?.copyWith(
-                                    color: Colors.white,
-                                  ),
-                        ),
-                        Text(
-                          '08/23',
-                          style:
-                              Theme.of(context).textTheme.headline4?.copyWith(
-                                    color: Colors.white,
-                                  ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
             ],
           ),
         ),
@@ -223,29 +173,6 @@ class _SendParcelCheckoutScreenState extends State<SendParcelCheckoutScreen> {
                 Text(
                   'Summary',
                   style: Theme.of(context).textTheme.headline3,
-                ),
-                SizedBox(
-                  width: 45,
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Edit',
-                            style: Theme.of(context).textTheme.bodyText2,
-                          ),
-                          SvgPicture.asset(
-                            'assets/images/icon_details.svg',
-                          ),
-                        ],
-                      ),
-                      Container(
-                        height: 1,
-                        color: Colors.black,
-                      )
-                    ],
-                  ),
                 ),
               ],
             ),

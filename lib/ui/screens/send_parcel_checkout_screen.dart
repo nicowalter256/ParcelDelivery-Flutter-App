@@ -5,6 +5,7 @@ import 'package:cargo_app/common/theme_helper.dart';
 import 'package:cargo_app/ui/screens/agent_screen.dart';
 import 'package:cargo_app/constants/constants.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SendParcelCheckoutScreen extends StatefulWidget {
@@ -55,11 +56,12 @@ class _SendParcelCheckoutScreenState extends State<SendParcelCheckoutScreen> {
     setState(() {
       _isLoading = true;
     });
-    var _url = Uri.parse(
-        constants[0].url + 'package/' + packageData[6] / dropdownvalue);
+    var pack = packageData[6].toString();
+    var _url =
+        Uri.parse(constants[0].url + 'package/' + pack + '/' + dropdownvalue);
     final response = await http.put(_url,
         body: {
-          'amount_to_pay': int.parse(userNameController.text),
+          'amount_to_pay': userNameController.text,
         },
         headers: headers);
     final String responseData = response.body;

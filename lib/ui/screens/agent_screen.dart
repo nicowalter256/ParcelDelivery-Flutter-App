@@ -7,6 +7,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:cargo_app/constants/constants.dart';
 import 'package:cargo_app/pages/profile_page.dart';
 import 'package:http/http.dart' as http;
+import 'package:cargo_app/ui/screens/track_parcel_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cargo_app/models/packagesModel.dart';
 
@@ -113,58 +114,14 @@ class _AgentHomeScreenState extends State<AgentHomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Enter parcel number',
-                              style: Theme.of(context).textTheme.headline5,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                top: 7,
-                                bottom: 40,
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      height: 49,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(4),
-                                        color:
-                                            Theme.of(context).backgroundColor,
-                                      ),
-                                      child: TextFormField(
-                                        controller: trackFieldController,
-                                        onSaved: (value) {
-                                          trackFieldController.text = value!;
-                                        },
-                                        decoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                        ),
-                                        validator: (text) {
-                                          if (text == null || text.isEmpty) {
-                                            return 'Parcel No is required';
-                                          }
-                                          return null;
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
                             SizedBox(
                               height: 48,
                               width: double.infinity,
                               child: TextButton(
                                 onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                super.widget));
-                                    getPackages(trackFieldController.text);
-                                  }
+                                  Get.to(
+                                    const TrackScreen(),
+                                  );
                                 },
                                 child: Text(
                                   'Track parcel',

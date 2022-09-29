@@ -45,6 +45,7 @@ class _MyParcelDeliveryMethodState extends State<MyParcelDeliveryMethod> {
   final TextEditingController deliveryController = TextEditingController();
   final TextEditingController pickupController = TextEditingController();
   final TextEditingController packagenameController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
 
   Map<String, String> get headers => {
         "Authorization": "Bearer $tokens",
@@ -63,6 +64,7 @@ class _MyParcelDeliveryMethodState extends State<MyParcelDeliveryMethod> {
           'receiver_contact': contactController.text,
           'delivery_location': deliveryController.text,
           'pick_up_location': pickupController.text,
+          'description': descriptionController.text,
         },
         headers: headers);
     final String responseData = response.body;
@@ -204,6 +206,22 @@ class _MyParcelDeliveryMethodState extends State<MyParcelDeliveryMethod> {
               },
               decoration: ThemeHelper().textInputDecoration(
                   'Delivery Address', 'Enter delivery address'),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            TextFormField(
+              controller: descriptionController,
+              keyboardType: TextInputType.multiline,
+              onSaved: (value) {
+                descriptionController.text = value!;
+              },
+              validator: (text) {
+                if (text == null || text.isEmpty) {
+                  return 'Enter Description';
+                }
+                return null;
+              },
             ),
             const SizedBox(
               height: 16,

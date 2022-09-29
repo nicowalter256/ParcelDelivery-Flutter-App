@@ -20,8 +20,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String tokens = "";
-  final TextEditingController trackFieldController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
 
   void loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -108,66 +106,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         vertical: 64,
                       ),
                       child: Form(
-                        key: _formKey,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Enter parcel number',
-                              style: Theme.of(context).textTheme.headline5,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                top: 7,
-                                bottom: 40,
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      height: 49,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(4),
-                                        color:
-                                            Theme.of(context).backgroundColor,
-                                      ),
-                                      child: TextFormField(
-                                        controller: trackFieldController,
-                                        onSaved: (value) {
-                                          trackFieldController.text = value!;
-                                        },
-                                        decoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                        ),
-                                        validator: (text) {
-                                          if (text == null || text.isEmpty) {
-                                            return 'Parcel No is required';
-                                          }
-                                          return null;
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
                             SizedBox(
                               height: 48,
                               width: double.infinity,
                               child: TextButton(
                                 onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    Get.to(
-                                      const TrackScreen(),
-                                    );
-                                    // Navigator.pushReplacement(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //         builder: (BuildContext context) =>
-                                    //             super.widget));
-                                    // getPackages(trackFieldController.text);
-                                  }
+                                  Get.to(
+                                    const TrackScreen(),
+                                  );
                                 },
                                 child: Text(
                                   'Track parcel',

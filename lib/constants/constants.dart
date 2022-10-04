@@ -6,6 +6,6 @@ class Constants {
 
 List<Constants> constants = [
   Constants(
-      url: 'http://192.168.0.103/v1/delivery/public/api/', //0
+      url: 'http://192.168.5.192/v1/delivery/public/api/', //0
       defaultBG: 'assets/images/server.png') //1
 ];

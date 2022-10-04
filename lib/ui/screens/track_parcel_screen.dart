@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:vertical_stepper/vertical_stepper.dart';
-import 'package:vertical_stepper/vertical_stepper.dart' as step;
+// import 'package:vertical_stepper/vertical_stepper.dart';
+// import 'package:vertical_stepper/vertical_stepper.dart' as step;
 import 'package:cargo_app/models/SingleModel.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cargo_app/constants/constants.dart';
 import 'dart:convert';
+import 'package:timeago/timeago.dart' as timeago;
 
 class TrackScreen extends StatefulWidget {
   const TrackScreen({Key? key}) : super(key: key);
@@ -22,6 +24,29 @@ class _TrackScreenState extends State<TrackScreen>
   bool result = false;
 
   String tokens = "";
+  int _currentStep = 0;
+  bool _isVerticalStepper = true;
+
+  _stepTapped(int step) {
+    setState(() => _currentStep = step);
+  }
+
+  _stepContinue() {
+    _currentStep < 2 ? setState(() => _currentStep += 1) : null;
+  }
+
+  _stepCancel() {
+    _currentStep > 0 ? setState(() => _currentStep -= 1) : null;
+  }
+
+  String packageName = "";
+  String pickUpLocation = "";
+  String dropOfocation = "";
+  String receiverName = "";
+  String receiverEmail = "";
+  String addedAt = "";
+  String status = "";
+  String lastUpdate = "";
 
   void loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -38,13 +63,26 @@ class _TrackScreenState extends State<TrackScreen>
         "Authorization": "Bearer $tokens",
       };
 
-  Future getPackage(String package) async {
-    var _url = Uri.parse(constants[0].url + 'package/' + package);
+  Future getPackage() async {
+    var _url =
+        Uri.parse(constants[0].url + 'package/' + trackFieldController.text);
     final response = await http.get(_url, headers: headers);
-    setState(() {
-      trackDetails = json.decode(response.body);
-      result = true;
-    });
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      setState(() {
+        packageName = data['package_name'];
+        pickUpLocation = data['pick_up_location'];
+        dropOfocation = data['delivery_location'];
+        addedAt = data['created_at'];
+        receiverName = data['receiver_name'];
+        receiverEmail = data['receiver_email'];
+        status = data['package_status'];
+        lastUpdate = data['${data['package_status']}'];
+        result = true;
+      });
+    } else {
+      Get.snackbar('Error  ', 'Package Not Found');
+    }
   }
 
   @override
@@ -53,39 +91,7 @@ class _TrackScreenState extends State<TrackScreen>
     loadData();
   }
 
-  List<step.Step> steps = [
-    const step.Step(
-        shimmer: false,
-        title: "Package Added",
-        iconStyle: Colors.blue,
-        content: Padding(
-          padding: EdgeInsets.only(left: 5),
-          child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text('2022/09/56 11:15 am Package Created')),
-        )),
-    const step.Step(
-        shimmer: false,
-        title: "Package Rejected",
-        iconStyle: Colors.red,
-        content: Align(
-            alignment: Alignment.centerLeft,
-            child: Text('2022/09/56 11:15 am  In Transit'))),
-    const step.Step(
-        shimmer: false,
-        title: "Package In transit",
-        iconStyle: Colors.yellow,
-        content: Align(
-            alignment: Alignment.centerLeft,
-            child: Text('2022/09/56 11:15 am  In Transit'))),
-    const step.Step(
-        shimmer: false,
-        title: "Package Delivered",
-        iconStyle: Colors.green,
-        content: Align(
-            alignment: Alignment.centerLeft,
-            child: Text('2022/09/56 11:15 am  Package Delivered')))
-  ];
+  String transits = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: SingleChildScrollView(child: content()));
@@ -104,7 +110,7 @@ class _TrackScreenState extends State<TrackScreen>
             child: Align(
                 alignment: Alignment.center,
                 child: Padding(
-                    padding: const EdgeInsets.only(top: 30.0),
+                    padding: EdgeInsets.only(top: 30.0),
                     child: Column(children: [
                       Image.network(
                           "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT6Yc_N3xC9akfMD4yRs9kwCBKoaRrie9z-Rg&usqp=CAU",
@@ -159,7 +165,7 @@ class _TrackScreenState extends State<TrackScreen>
               GestureDetector(
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-                      getPackage("32831662784176");
+                      getPackage();
                     }
                   },
                   child: const Icon(Icons.search, size: 35))
@@ -172,23 +178,161 @@ class _TrackScreenState extends State<TrackScreen>
           ? Padding(
               padding: const EdgeInsets.fromLTRB(35, 2, 31, 0),
               child: Row(
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  const Text("Result :", style: TextStyle(fontSize: 25)),
-                  const Spacer(),
-                  const Icon(Icons.close, size: 25)
+                // ignore: prefer_literals_to_create_immutables
+                children: const [
+                  Text("Result :", style: TextStyle(fontSize: 25)),
+                  Spacer(),
+                  Icon(Icons.close, size: 25)
                 ],
               ),
             )
           : const SizedBox(),
       const SizedBox(height: 5),
       result
-          ? Padding(
-              padding: const EdgeInsets.fromLTRB(15, 2, 15, 0),
-              child: VerticalStepper(
-                steps: steps,
-                dashLength: 2,
-              ),
+          ? Column(
+              children: [
+                Stepper(
+                  // vertical or horizontial
+                  type: _isVerticalStepper
+                      ? StepperType.vertical
+                      : StepperType.horizontal,
+                  physics: const ScrollPhysics(),
+                  currentStep: _currentStep,
+                  onStepTapped: (step) => _stepTapped(step),
+                  onStepContinue: _stepContinue,
+                  onStepCancel: _stepCancel,
+                  steps: [
+                    // The first step: Name
+                    Step(
+                      title: const Text('Details'),
+                      content: Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              const Text(
+                                'PackageName:',
+                                style: TextStyle(fontSize: 17),
+                              ),
+                              Text(
+                                packageName,
+                                style: const TextStyle(fontSize: 15),
+                              )
+                            ],
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              const Text(
+                                'Pick Up:',
+                                style: TextStyle(fontSize: 17),
+                              ),
+                              Text(
+                                pickUpLocation,
+                                style: const TextStyle(fontSize: 15),
+                              )
+                            ],
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              const Text(
+                                'Drop Off:',
+                                style: TextStyle(fontSize: 17),
+                              ),
+                              Text(
+                                dropOfocation,
+                                style: const TextStyle(fontSize: 15),
+                              )
+                            ],
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              const Text(
+                                'Receiver Email:',
+                                style: TextStyle(fontSize: 17),
+                              ),
+                              Text(
+                                receiverEmail,
+                                style: const TextStyle(fontSize: 15),
+                              )
+                            ],
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              const Text(
+                                'Receiver Name:',
+                                style: TextStyle(fontSize: 17),
+                              ),
+                              Text(
+                                receiverName,
+                                style: const TextStyle(fontSize: 15),
+                              )
+                            ],
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              const Text(
+                                'Added:',
+                                style: TextStyle(fontSize: 17),
+                              ),
+                              Text(
+                                timeago.format(DateTime.parse(addedAt)),
+                                // 'Last update: 3 hours ago',
+                                style: Theme.of(context).textTheme.headline6,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      isActive: _currentStep >= 0,
+                      state: _currentStep >= 0
+                          ? StepState.complete
+                          : StepState.disabled,
+                    ),
+                    // The second step: Phone number
+                    Step(
+                      title: const Text('Status'),
+                      content: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              const Text('Your Package status is:'),
+                              Text('${status}'),
+                            ],
+                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          //   children: [
+                          //     const Text('Last Update:'),
+                          //     Text(
+                          //       timeago.format(DateTime.parse(lastUpdate)),
+                          //       // 'Last update: 3 hours ago',
+                          //       style: Theme.of(context).textTheme.headline6,
+                          //     ),
+                          //   ],
+                          // )
+                        ],
+                      ),
+                      isActive: _currentStep >= 0,
+                      state: _currentStep >= 1
+                          ? StepState.complete
+                          : StepState.disabled,
+                    ),
+                    // The third step: Verify phone number
+                  ],
+                ),
+              ],
             )
           : Lottie.network(
               "https://assets2.lottiefiles.com/packages/lf20_t24tpvcu.json"),

@@ -91,11 +91,12 @@ class _SendParcelCheckoutScreenState extends State<SendParcelCheckoutScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 24,
+            vertical: 150,
           ),
           child: ListView(
             children: [
               Text(
-                'Checkout',
+                'Package Details',
                 style: Theme.of(context).textTheme.headline1,
               ),
               const SizedBox(
@@ -178,6 +179,13 @@ class _SendParcelCheckoutScreenState extends State<SendParcelCheckoutScreen> {
                 ),
               ],
             ),
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Text('Package:'),
+              SizedBox(
+                width: 30,
+              ),
+              Text(packageData[0])
+            ]),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -195,11 +203,11 @@ class _SendParcelCheckoutScreenState extends State<SendParcelCheckoutScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Parcel size',
+                  'Description',
                   style: Theme.of(context).textTheme.headline4,
                 ),
                 Text(
-                  'Medium',
+                  '${packageData[6]}',
                   style: Theme.of(context).textTheme.headline5,
                 ),
               ],

@@ -181,6 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       packageData.deliveryLocation,
                                       packageData.amountToPay,
                                       packageData.receiverName,
+                                      packageData.description,
                                     ]);
                               },
                               child: Padding(

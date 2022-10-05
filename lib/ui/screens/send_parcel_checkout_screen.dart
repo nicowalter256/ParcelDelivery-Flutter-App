@@ -91,7 +91,7 @@ class _SendParcelCheckoutScreenState extends State<SendParcelCheckoutScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 24,
-            vertical: 150,
+            vertical: 20,
           ),
           child: ListView(
             children: [
@@ -111,152 +111,156 @@ class _SendParcelCheckoutScreenState extends State<SendParcelCheckoutScreen> {
   }
 
   Widget _buildBottomSheet() {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      height: MediaQuery.of(context).size.height * 0.5,
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(16),
-          topLeft: Radius.circular(16),
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.all(24),
+        height: MediaQuery.of(context).size.height * 0.5,
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(16),
+            topLeft: Radius.circular(16),
+          ),
+          color: Color(0xFFf5f5f5),
         ),
-        color: Color(0xFFf5f5f5),
-      ),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            role == "agent"
-                ? Column(
-                    children: [
-                      DropdownButton(
-                        // Initial Value
-                        value: dropdownvalue,
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                role == "agent"
+                    ? Column(
+                        children: [
+                          DropdownButton(
+                            // Initial Value
+                            value: dropdownvalue,
 
-                        // Down Arrow Icon
-                        icon: const Icon(Icons.keyboard_arrow_down),
+                            // Down Arrow Icon
+                            icon: const Icon(Icons.keyboard_arrow_down),
 
-                        // Array list of items
-                        items: items.map((String items) {
-                          return DropdownMenuItem(
-                            value: items,
-                            child: Text(items),
-                          );
-                        }).toList(),
-                        // After selecting the desired option,it will
-                        // change button value to selected value
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownvalue = newValue!;
-                          });
-                        },
-                      ),
-                      TextFormField(
-                        controller: userNameController,
-                        onSaved: (value) {
-                          userNameController.text = value!;
-                        },
-                        validator: (text) {
-                          if (text == null || text.isEmpty) {
-                            return 'Amount is required';
-                          }
-                          return null;
-                        },
-                        decoration: ThemeHelper()
-                            .textInputDecoration('Amount', 'Enter amount'),
-                      ),
-                    ],
-                  )
-                : Text(''),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Summary',
-                  style: Theme.of(context).textTheme.headline3,
+                            // Array list of items
+                            items: items.map((String items) {
+                              return DropdownMenuItem(
+                                value: items,
+                                child: Text(items),
+                              );
+                            }).toList(),
+                            // After selecting the desired option,it will
+                            // change button value to selected value
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                dropdownvalue = newValue!;
+                              });
+                            },
+                          ),
+                          TextFormField(
+                            controller: userNameController,
+                            onSaved: (value) {
+                              userNameController.text = value!;
+                            },
+                            validator: (text) {
+                              if (text == null || text.isEmpty) {
+                                return 'Amount is required';
+                              }
+                              return null;
+                            },
+                            decoration: ThemeHelper()
+                                .textInputDecoration('Amount', 'Enter amount'),
+                          ),
+                        ],
+                      )
+                    : Text(''),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Summary',
+                      style: Theme.of(context).textTheme.headline3,
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              const Text('Package:'),
-              const SizedBox(
-                width: 30,
-              ),
-              Text(packageData[0])
-            ]),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Recipient',
-                  style: Theme.of(context).textTheme.headline4,
+                Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  const Text('Package:'),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  Text(packageData[0])
+                ]),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Recipient',
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                    Text(
+                      '${packageData[5]}\n${packageData[1]}\n${packageData[2]}\n${packageData[3]}',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                  ],
                 ),
-                Text(
-                  '${packageData[5]}\n${packageData[1]}\n${packageData[2]}\n${packageData[3]}',
-                  style: Theme.of(context).textTheme.headline5,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Description',
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                    Text(
+                      '${packageData[6]}',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Description',
-                  style: Theme.of(context).textTheme.headline4,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Delivery method',
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                    Text(
+                      'Bus',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                  ],
                 ),
-                Text(
-                  '${packageData[6]}',
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Delivery method',
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-                Text(
-                  'Bus',
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-              ],
-            ),
-            role == "agent"
-                ? _isLoading
-                    ? const CircularProgressIndicator()
+                role == "agent"
+                    ? _isLoading
+                        ? const CircularProgressIndicator()
+                        : SizedBox(
+                            height: 38,
+                            width: double.infinity,
+                            child: TextButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  updateParcel();
+                                }
+                              },
+                              child: Text(
+                                'Update',
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                              style: Theme.of(context).textButtonTheme.style,
+                            ),
+                          )
                     : SizedBox(
-                        height: 48,
+                        height: 38,
                         width: double.infinity,
                         child: TextButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              updateParcel();
-                            }
-                          },
+                          onPressed: () {},
                           child: Text(
-                            'Update',
+                            'Amount to Pay: Ugx ${packageData[4]}',
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
                           style: Theme.of(context).textButtonTheme.style,
                         ),
                       )
-                : SizedBox(
-                    height: 48,
-                    width: double.infinity,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Amount to Pay: Ugx ${packageData[4]}',
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                      style: Theme.of(context).textButtonTheme.style,
-                    ),
-                  )
-          ],
+              ],
+            ),
+          ),
         ),
       ),
     );

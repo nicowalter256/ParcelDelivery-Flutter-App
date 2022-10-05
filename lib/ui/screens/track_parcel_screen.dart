@@ -134,12 +134,11 @@ class _TrackScreenState extends State<TrackScreen>
       Form(
         key: _formKey,
         child: Padding(
-            // ignore: prefer_const_constructors
-            padding: EdgeInsets.fromLTRB(30, 0, 20, 0),
+            padding: const EdgeInsets.fromLTRB(30, 0, 20, 0),
             child: Row(children: [
               Container(
-                height: 60,
-                width: 310,
+                height: MediaQuery.of(context).size.height / 20,
+                width: MediaQuery.of(context).size.height / 3,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(50)),
@@ -249,13 +248,11 @@ class _TrackScreenState extends State<TrackScreen>
                               )
                             ],
                           ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          Wrap(
                             children: [
                               const Text(
                                 'Receiver Email:',
-                                style: TextStyle(fontSize: 17),
+                                style: TextStyle(fontSize: 15),
                               ),
                               Text(
                                 receiverEmail,

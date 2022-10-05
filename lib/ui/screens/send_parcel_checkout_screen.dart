@@ -180,8 +180,8 @@ class _SendParcelCheckoutScreenState extends State<SendParcelCheckoutScreen> {
               ],
             ),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Text('Package:'),
-              SizedBox(
+              const Text('Package:'),
+              const SizedBox(
                 width: 30,
               ),
               Text(packageData[0])

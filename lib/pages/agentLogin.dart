@@ -168,7 +168,6 @@ class _AgentLoginPageState extends State<AgentLoginPage> {
                                             color: Colors.red, width: 2.0)),
                                     suffixIcon: IconButton(
                                       icon: Icon(
-                                        // Based on passwordVisible state choose the icon
                                         _passwordVisible
                                             ? Icons.visibility
                                             : Icons.visibility_off,

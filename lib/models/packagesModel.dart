@@ -33,7 +33,6 @@ class Datum {
     required this.id,
     required this.packageName,
     required this.qantity,
-    required this.categoryId,
     required this.packageStatus,
     required this.receiverName,
     required this.senderId,
@@ -49,7 +48,6 @@ class Datum {
   int id;
   String packageName;
   dynamic qantity;
-  dynamic categoryId;
   String packageStatus;
   String receiverName;
   int senderId;
@@ -65,7 +63,6 @@ class Datum {
         id: json["id"],
         packageName: json["package_name"],
         qantity: json["qantity"],
-        categoryId: json["category_id"],
         packageStatus: json["package_status"],
         receiverName: json["receiver_name"],
         senderId: json["sender_id"],
@@ -82,7 +79,6 @@ class Datum {
         "id": id,
         "package_name": packageName,
         "qantity": qantity,
-        "category_id": categoryId,
         "package_status": packageStatus,
         "receiver_name": receiverName,
         "sender_id": senderId,

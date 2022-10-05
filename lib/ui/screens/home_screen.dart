@@ -40,13 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
         "Authorization": "Bearer $tokens",
       };
 
-  Future<Packages> getPackages(String package) async {
-    var _url;
-    if (package == "all") {
-      _url = Uri.parse(constants[0].url + 'packages');
-    } else {
-      _url = Uri.parse(constants[0].url + 'package/' + package);
-    }
+  Future<Packages> getPackages() async {
+    var _url = Uri.parse(constants[0].url + 'packages');
     final response = await http.get(_url, headers: headers);
     final String responseData = response.body;
     return packagesFromJson(responseData);
@@ -161,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
           SliverList(
             delegate: SliverChildListDelegate([
               FutureBuilder<Packages>(
-                future: getPackages("all"),
+                future: getPackages(),
                 builder: (context, snapshot) {
                   final _data = snapshot.data?.data;
                   if (snapshot.hasData) {

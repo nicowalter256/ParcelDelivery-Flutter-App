@@ -308,17 +308,6 @@ class _TrackScreenState extends State<TrackScreen>
                               Text('${status}'),
                             ],
                           ),
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          //   children: [
-                          //     const Text('Last Update:'),
-                          //     Text(
-                          //       timeago.format(DateTime.parse(lastUpdate)),
-                          //       // 'Last update: 3 hours ago',
-                          //       style: Theme.of(context).textTheme.headline6,
-                          //     ),
-                          //   ],
-                          // )
                         ],
                       ),
                       isActive: _currentStep >= 0,
@@ -326,7 +315,6 @@ class _TrackScreenState extends State<TrackScreen>
                           ? StepState.complete
                           : StepState.disabled,
                     ),
-                    // The third step: Verify phone number
                   ],
                 ),
               ],
